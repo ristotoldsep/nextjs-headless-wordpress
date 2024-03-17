@@ -1,11 +1,12 @@
+import { useEffect } from "react";
+import Link from "next/link";
 import Head from "next/head";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import Date from "@/components/Date";
+import FeaturedImage from "@/components/FeaturedImage";
 
 import { getAllPosts } from "@/lib/posts";
-import FeaturedImage from "@/components/FeaturedImage";
-import Link from "next/link";
-import { useEffect } from "react";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -48,7 +49,7 @@ export default function BlogHome({ allPosts }: Props) {
         });
     }, []);
 
-    // console.log(allPosts);
+    console.log(allPosts);
 
     const posts = allPosts;
 
@@ -91,9 +92,8 @@ export default function BlogHome({ allPosts }: Props) {
                                             {post.title}
                                         </Link>
                                     </h2>
-                                    <div className="py-4">
-                                        {/* Published on <Date dateString={post.date} /> */}
-                                        {post.date}
+                                    <div className="pb-4">
+                                        Published on <Date dateString={post.date} />
                                     </div>
                                     <div
                                         className="text-lg"
