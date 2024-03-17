@@ -1,12 +1,15 @@
-export default function getAllPosts() {
-  const query = {
+import graphqlRequest from "./graphqlRequest";
+
+export async function getAllPosts() {
+  
+    const query = {
     query: `
         query NewQuery {
             posts {
               nodes {
                 title
                 slug
-                excerpt
+                excerpt(format: RENDERED)
                 featuredImage {
                   node {
                     mediaDetails {
@@ -36,4 +39,10 @@ export default function getAllPosts() {
           }
         `,
   };
+
+  const resJson = await graphqlRequest(query);
+
+  const allPosts = resJson.data.posts;
+
+  return allPosts;
 }
