@@ -47,6 +47,33 @@ export async function getAllPosts() {
     return allPosts;
 }
 
+
+export interface PostData {
+  id: string;
+  title: string;
+  content: string;
+  excerpt?: string;
+  modified?: string;
+  slug: string;
+  featuredImage?: {
+    node: {
+      mediaDetails: {
+        sizes: Array<{
+          width: number;
+          height: number;
+          sourceUrl: string;
+        }>;
+      };
+    };
+  };
+  categories?: {
+    nodes: Array<{
+      name: string;
+      slug: string;
+    }>;
+  };
+}
+
 export async function getSinglePost(slug: string) {
     const query = {
         query: `
@@ -85,6 +112,11 @@ export async function getSinglePost(slug: string) {
     const singlePost = resJson.data.post;
 
     return singlePost;
+}
+
+
+export interface Slug {
+  slug: string;
 }
 
 export async function getPostSlugs() {

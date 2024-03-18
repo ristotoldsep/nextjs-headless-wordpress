@@ -71,8 +71,8 @@ export default function BlogHome({ allPosts }: Props) {
                     Read our latest articles
                 </p>
             </div>
-            <main>
-                <section className="container mx-auto lg:max-w-6xl post-list mt-8 px-8">
+            <main className="px-8">
+                <section className="container mx-auto lg:max-w-6xl post-list mt-8">
                     <ul>
                         {posts.nodes.map((post) => (
                             <li

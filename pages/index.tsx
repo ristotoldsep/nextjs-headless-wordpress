@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import Head from "next/head";
 import SiteHeader from "../components/SiteHeader";
 import Link from "next/link";
+import Head from "next/head";
 
 export default function Home() {
 
