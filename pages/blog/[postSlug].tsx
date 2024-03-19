@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     // const { comments, commentCount } = await getComments(params.postSlug);
     // const seoData = await getSeo('post', params.postSlug);
 
-    let featuredImageUrl = postData.featuredImage ? postData.featuredImage.node.mediaDetails.sizes[0].sourceUrl : "/home-bg.webp";
+    let featuredImageUrl = postData.featuredImage ? postData.featuredImage.node.mediaDetails.sizes[1].sourceUrl : "/home-bg.webp";
 
     if (!postData) {
         return { notFound: true };

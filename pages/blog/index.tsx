@@ -49,7 +49,7 @@ export default function BlogHome({ allPosts }: Props) {
         });
     }, []);
 
-    console.log(allPosts);
+    // console.log(allPosts);
 
     const posts = allPosts;
 

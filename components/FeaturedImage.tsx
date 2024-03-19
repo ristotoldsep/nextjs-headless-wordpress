@@ -36,11 +36,13 @@ export default function FeaturedImage({ post }: Props) {
 
   const defaultFeaturedImage =
     "https://gatsby.vdisain.dev/wp-content/uploads/2024/03/placeholder-image.jpg";
-  const defaultWidth = 300;
-  const defaultHeight = 200;
+  const defaultWidth = 440;
+  const defaultHeight = 330;
+
+  // console.log(post);
 
   if (post.featuredImage) {
-    let size = post.featuredImage.node.mediaDetails.sizes[0];
+    let size = post.featuredImage.node.mediaDetails.sizes[3] || post.featuredImage.node.mediaDetails.sizes[0];
 
     img = {
       src: size.sourceUrl,
