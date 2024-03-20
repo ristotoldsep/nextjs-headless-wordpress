@@ -2,33 +2,45 @@ import Head from "next/head";
 import SiteHeader from "../components/SiteHeader";
 import SiteFooter from "../components/SiteFooter";
 import { getPageSlugs, getSinglePage } from "../lib/pages";
+import { GetStaticProps, GetStaticPaths } from 'next';
 
-export async function getStaticProps({ params }) {
-    const pageData = await getSinglePage(params.pageSlug);
+interface PageProps {
+    pageData: {
+        title: string;
+        content: string;
+    };
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+
+    // console.log(context);
+
+    // Ensure that params exists before attempting to access its properties
+    if (!context.params) {
+        return { notFound: true };
+    }
+
+    const pageData = await getSinglePage(context.params.pageSlug as string);
 
     return {
         props: {
             pageData,
-        }
-    }
+        },
+    };
+};
 
-}
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
     const pageSlugs = await getPageSlugs();
 
     return {
-        paths: pageSlugs.map((s) => (
-            {
-                params: {
-                    pageSlug: s.slug
-                }
-            }
-        )),
+        paths: pageSlugs.map((s) => ({
+            params: { pageSlug: s.slug },
+        })),
         fallback: false,
-    }
+    };
+};
 
-}
-export default function Page({ pageData }) {
+const Page: React.FC<PageProps> = ({ pageData }) => {
     return (
         <>
             <Head>
@@ -47,6 +59,7 @@ export default function Page({ pageData }) {
             </section>
             <SiteFooter />
         </>
-        
     );
-}
+};
+
+export default Page;

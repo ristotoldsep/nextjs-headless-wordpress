@@ -64,7 +64,7 @@ export default function BlogHome({ allPosts }: Props) {
                 <SiteHeader className="header-blog-home z-10 relative" />
 
                 <h1 className="text-6xl text-center text-slate-100 relative z-10 py-8 mt-8">
-                    BLOG
+                    Blog
                 </h1>
 
                 <p className="relative z-10 text-center text-slate-200 text-2xl">

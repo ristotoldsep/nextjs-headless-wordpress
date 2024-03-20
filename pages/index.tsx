@@ -5,7 +5,7 @@ import SiteHeader from "../components/SiteHeader";
 import Link from "next/link";
 import Head from "next/head";
 
-export default function Home() {
+const Home = () => {
 
   // Just for animation on scroll
   useEffect(() => {
@@ -79,3 +79,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;
