@@ -47,7 +47,7 @@ const Page: React.FC<PageProps> = ({ pageData }) => {
                 <title>{pageData.title}</title>
             </Head>
             <section className="bg-slate-700">
-                <SiteHeader className="header-page z-10 relative" />
+                <SiteHeader className="header-page relative" />
             </section>
             <section className="content-area py-8">
                 <article>

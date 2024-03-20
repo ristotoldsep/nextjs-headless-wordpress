@@ -33,7 +33,7 @@ const Home = () => {
       <div className="min-h-screen bg-[url('/home-bg.webp')] relative bg-cover">
         <div className="absolute bg-slate-900 inset-0 z-0 opacity-40"></div>
 
-        <SiteHeader className="z-10 relative" />
+        <SiteHeader className="relative" />
 
         <main>
           <div className="min-h-[90vh] flex flex-col items-center justify-center z-10 relative">

@@ -61,7 +61,7 @@ export default function BlogHome({ allPosts }: Props) {
             <div className="h-[30vh] min-h-[20rem] bg-[url('/home-bg.webp')] relative">
                 <div className="absolute bg-slate-900 inset-0 z-0 opacity-40"></div>
 
-                <SiteHeader className="header-blog-home z-10 relative" />
+                <SiteHeader className="header-blog-home relative" />
 
                 <h1 className="text-6xl text-center text-slate-100 relative z-10 py-8 mt-8">
                     Blog

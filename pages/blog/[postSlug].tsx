@@ -71,7 +71,7 @@ const Post: NextPage<PostProps> = ({ postData, featuredImageUrl/* , comments, co
                 <meta name="description" content={seoData.metaDesc} key="metadesc" /> */}
             </Head>
             <section className="bg-slate-700 bg-opacity-70 absolute w-full z-20">
-                <SiteHeader className="header-single-post z-10 relative" />
+                <SiteHeader className="header-single-post relative" />
             </section>
             <article className={`font-light`}>
                 <section className="hero-area h-[60vh] min-h-[30rem] bg-no-repeat bg-cover bg-center relative" style={{backgroundImage: featuredImageUrl}}>
