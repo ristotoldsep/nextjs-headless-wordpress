@@ -68,7 +68,7 @@ export default function BlogHome({ allPosts }: Props) {
                 </h1>
 
                 <p className="relative z-10 text-center text-slate-200 text-2xl">
-                    Read our latest articles
+                    Read our latest articles!
                 </p>
             </div>
             <main className="px-8">
