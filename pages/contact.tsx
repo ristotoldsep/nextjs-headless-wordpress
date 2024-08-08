@@ -11,8 +11,8 @@ const ContactPage = () => {
           <title>Products</title>
       </Head>
 
-      <div className="h-[30vh] min-h-[20rem] bg-[url('/bmw-retro.jpg')] bg-cover bg-center relative">
-          <div className="absolute bg-slate-900 inset-0 z-0 opacity-40"></div>
+      <div className="h-[30vh] min-h-[20rem] bg-[url('/bmw-retro.jpg')] bg-cover bg-center relative px-3">
+          <div className="absolute bg-slate-900 inset-0 z-0 opacity-40 px-3"></div>
 
           <SiteHeader className="header-blog-home relative" />
 
@@ -21,7 +21,7 @@ const ContactPage = () => {
           </h1>
 
           <p className="relative z-10 text-center text-slate-200 text-2xl">
-              Custom form with validation that sends email to Wordpress back-end.
+              Custom form with validation that sends email to Wordpress back-end through CF7 REST API.
           </p>
       </div>
 
