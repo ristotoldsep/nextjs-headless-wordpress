@@ -3,6 +3,11 @@ import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
 import { getAllProducts } from "@/lib/products";
 import Head from "next/head";
+import { Product } from "@/lib/types";
+
+interface ProductsListProps {
+  products: Product[];
+}
 
 // Get the products data
 export async function getStaticProps() {
@@ -15,7 +20,7 @@ export async function getStaticProps() {
   };
 }
 
-const ProductsList = ({ products }) => {
+const ProductsList = ({ products }: ProductsListProps) => {
   
   console.log(products);
 

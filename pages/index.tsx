@@ -36,7 +36,7 @@ const Home = () => {
         <SiteHeader className="relative" />
 
         <main>
-          <div className="min-h-[90vh] flex flex-col items-center justify-center z-10 relative">
+          <div className="min-h-[90vh] flex flex-col items-center justify-center z-10 relative px-8">
             <h1
               className="text-3xl text-white font-extrabold sm:text-9xl flex flex-col items-center"
               data-aos="fade-up"
