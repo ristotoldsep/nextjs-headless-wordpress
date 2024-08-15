@@ -1,4 +1,7 @@
+// posts.ts
+
 import graphqlRequest from "./graphqlRequest";
+import { PostsData, SinglePostData, PostSlugsData } from "./types";
 
 export async function getAllPosts() {
     const query = {
@@ -40,38 +43,10 @@ export async function getAllPosts() {
         `,
     };
 
-    const resJson = await graphqlRequest(query);
-
+    const resJson = await graphqlRequest<{ data: PostsData }>(query);
     const allPosts = resJson.data.posts;
 
     return allPosts;
-}
-
-
-export interface PostData {
-  id: string;
-  title: string;
-  content: string;
-  excerpt?: string;
-  modified?: string;
-  slug: string;
-  featuredImage?: {
-    node: {
-      mediaDetails: {
-        sizes: Array<{
-          width: number;
-          height: number;
-          sourceUrl: string;
-        }>;
-      };
-    };
-  };
-  categories?: {
-    nodes: Array<{
-      name: string;
-      slug: string;
-    }>;
-  };
 }
 
 export async function getSinglePost(slug: string) {
@@ -97,26 +72,20 @@ export async function getSinglePost(slug: string) {
                 }
               }
               categories {
-                      nodes {
-                  name
-                  slug
-                }
+                  nodes {
+                    name
+                    slug
+                  }
               }
             }
           }
         `,
     };
 
-    const resJson = await graphqlRequest(query);
-
+    const resJson = await graphqlRequest<{ data: SinglePostData }>(query);
     const singlePost = resJson.data.post;
 
     return singlePost;
-}
-
-
-export interface Slug {
-  slug: string;
 }
 
 export async function getPostSlugs() {
@@ -132,8 +101,7 @@ export async function getPostSlugs() {
         `
     };
 
-    const resJson = await graphqlRequest(query);
-
+    const resJson = await graphqlRequest<{ data: PostSlugsData }>(query);
     const slugs = resJson.data.posts.nodes;
 
     return slugs;

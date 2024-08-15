@@ -1,11 +1,11 @@
-type GraphQLResponse = any; // Replace `any` with a more specific type if available
+// lib/graphqlRequest.ts
 
 interface GraphQLQuery {
     query: string;
     variables?: Record<string, any>;
 }
 
-export default async function graphqlRequest(query: GraphQLQuery): Promise<GraphQLResponse> {
+export default async function graphqlRequest<T>(query: GraphQLQuery): Promise<T> {
     const url = "https://gatsby.vdisain.dev/graphql";
     const headers = { 'Content-Type': 'application/json' };
 
@@ -19,7 +19,6 @@ export default async function graphqlRequest(query: GraphQLQuery): Promise<Graph
         throw new Error(`Network response was not ok: ${res.statusText}`);
     }
 
-    const resJson: GraphQLResponse = await res.json();
-
-    return resJson;
+    const resJson = await res.json();
+    return resJson as T;
 }
