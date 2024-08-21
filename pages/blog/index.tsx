@@ -1,15 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import Date from "@/components/Date";
 import FeaturedImage from "@/components/FeaturedImage";
-
-import { getAllPosts } from "@/lib/posts";
-
+// import LoadMore from "@/components/LoadMore";
+import { getPostList } from "@/lib/posts";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import LoadMore from "@/components/LoadMore";
 
 interface Post {
     slug: string;
@@ -31,7 +31,7 @@ interface Props {
 }
 
 export async function getStaticProps() {
-    const allPosts = await getAllPosts();
+    const allPosts = await getPostList();
 
     return {
         props: {
@@ -51,7 +51,7 @@ export default function BlogHome({ allPosts }: Props) {
 
     // console.log(allPosts);
 
-    const posts = allPosts;
+    const [posts, setPosts] = useState(allPosts);
 
     return (
         <>
@@ -117,8 +117,8 @@ export default function BlogHome({ allPosts }: Props) {
                             </li>
                         ))}
                     </ul>
-                    <div className="py-4 text-center">
-                        {/* <LoadMore posts={posts} setPosts={setPosts} /> */}
+                    <div className="py-8 text-center">
+                        <LoadMore posts={posts} setPosts={setPosts} />
                     </div>
                 </section>
             </main>

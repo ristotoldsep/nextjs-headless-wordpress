@@ -12,6 +12,7 @@ export async function getAllProducts(): Promise<Product[]> {
                 id
                 title(format: RENDERED)
                 slug
+                excerpt
                 productFields {
                 summary
                 thumbnail {

@@ -58,7 +58,7 @@ export default function FeaturedImage({ post }: Props) {
   }
 
   return (
-    <Link href={`blog/${post.slug}`}>
+    <Link href={`/blog/${post.slug}`}>
       <Image
         src={img.src}
         width={img.width}

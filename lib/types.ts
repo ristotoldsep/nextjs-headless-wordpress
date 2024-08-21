@@ -86,6 +86,7 @@ export interface ProductThumbnail {
     id: string;
     title: string;
     slug: string;
+    excerpt: string;
     productFields: ProductFields;
     productCategories: {
       nodes: ProductCategory[];

@@ -5,6 +5,7 @@ import SiteHeader from "../components/SiteHeader";
 import Link from "next/link";
 import Head from "next/head";
 
+
 const Home = () => {
 
   // Just for animation on scroll
@@ -60,14 +61,14 @@ const Home = () => {
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
-                className="block w-full rounded bg-[#063E67] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#21455c] focus:outline-none focus:ring active:bg-teal-900 sm:w-auto"
+                className="block w-full rounded bg-[#063E67] px-12 py-3 text-sm font-medium text-white shadow hover:bg-[#21455c] focus:outline-none focus:ring active:bg-teal-900 sm:w-auto text-center"
                 href="/products"
               >
                 Our products
               </Link>
 
               <Link
-                className="block w-full rounded px-12 py-3 text-sm font-medium text-white shadow hover:text-[#063E67] focus:outline-none focus:ring active:text-teal-900 sm:w-auto"
+                className="block w-full rounded px-12 py-3 text-sm font-medium text-white shadow hover:text-[#063E67] focus:outline-none focus:ring active:text-teal-900 sm:w-auto text-center"
                 href="/about"
               >
                 About us

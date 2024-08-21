@@ -15,7 +15,7 @@ export default function SiteHeader({ className }: SiteHeaderProps) {
 
     return (
         <div className={`${className} z-1000 ${isMenuOpen ? 'bg-black' : 'bg-transparent'}`}>
-            <header className="container mx-auto lg:max-w-6xl flex items-center py-4 justify-between">
+            <header className="container mx-auto lg:max-w-6xl flex items-center py-4 px-4 justify-between">
                 <div className="flex items-center justify-between px-4 lg:px-0 w-full">
 
                     <div className="logo-area">
