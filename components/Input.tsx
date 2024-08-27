@@ -1,6 +1,17 @@
 //Input.js
+import React, { ChangeEvent } from 'react';
 
-const Input = ({ required, type, name, id, className, value, onChange }) => {
+interface InputProps {
+  required?: boolean;
+  type: string;
+  name: string;
+  id: string;
+  className?: string;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+const Input: React.FC<InputProps> = ({ required, type, name, id, className, value, onChange }) => {
   return (
     <input
       required={required}

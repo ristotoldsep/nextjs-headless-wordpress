@@ -1,9 +1,12 @@
+// [postSlug].tsx
+
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import SiteHeader from "../../components/SiteHeader";
 import SiteFooter from "../../components/SiteFooter";
 // import CommentForm from "../../components/CommentForm";
-import { getPostSlugs, getSinglePost, PostData, Slug } from "../../lib/posts";
+import { getPostSlugs, getSinglePost } from "../../lib/posts";
+import { PostData, Slug } from "../../lib/types";
 // import { getComments, CommentsData } from "../../lib/comments";
 // import { getSeo, SeoData } from "../../lib/seo";
 import Date from "../../components/Date";

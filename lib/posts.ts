@@ -1,20 +1,19 @@
-// posts.ts
-
 import graphqlRequest from "./graphqlRequest";
-import { PostsData, SinglePostData, PostSlugsData } from "./types";
+import { PostData, PostsData, SinglePostData, PostSlugsData, CategorySlugsData, CategoryDetailsData } from "./types";
 
-export async function getPostList(endCursor = null, taxonomy = null) {
+export async function getPostList(endCursor: string | null = null, taxonomy: { key: string, value: string } | null = null) {
   let condition = `after: "${endCursor}", first: 10, where: {orderby: {field: DATE, order: DESC}}`;
 
-  if(taxonomy) {
+  if (taxonomy) {
     condition = `after: "${endCursor}", first: 10, where: {orderby: {field: DATE, order: DESC}, ${taxonomy.key}: "${taxonomy.value}"}`;
   }
 
   const query = {
-      query: `
+    query: `
       query NewQuery {
           posts(${condition}) {
             nodes {
+              id
               title
               slug
               date
@@ -22,7 +21,6 @@ export async function getPostList(endCursor = null, taxonomy = null) {
               featuredImage {
                 node {
                   mediaDetails {
-                    file
                     sizes {
                       sourceUrl
                       width
@@ -49,49 +47,47 @@ export async function getPostList(endCursor = null, taxonomy = null) {
       `,
   };
 
-  const resJson = await graphqlRequest<{ data: PostsData }>(query);
+  const resJson = await graphqlRequest<{ data: { posts: PostsData } }>(query);
   const allPosts = resJson.data.posts;
 
   return allPosts;
 }
 
-export async function getSinglePost(slug: string) {
-    const query = {
-        query: `
-        query getSinglePost {
-            post(id: "${slug}", idType: SLUG) {
-              id
-              title(format: RENDERED)
-              content(format: RENDERED)
-              excerpt(format: RENDERED)
-              modified
-              slug
-              featuredImage {
-                node {
-                  mediaDetails {
-                    sizes {
-                      width
-                      height
-                      sourceUrl
-                    }
+export async function getSinglePost(slug: string): Promise<PostData> {
+  const query = {
+      query: `
+          query getSinglePost {
+              post(id: "${slug}", idType: SLUG) {
+                  id
+                  title(format: RENDERED)
+                  content(format: RENDERED)
+                  excerpt(format: RENDERED)
+                  modified
+                  slug
+                  featuredImage {
+                      node {
+                          mediaDetails {
+                              sizes {
+                                  width
+                                  height
+                                  sourceUrl
+                              }
+                          }
+                      }
                   }
-                }
-              }
-              categories {
-                  nodes {
-                    name
-                    slug
+                  categories {
+                      nodes {
+                          name
+                          slug
+                      }
                   }
               }
-            }
           }
-        `,
-    };
+      `,
+  };
 
-    const resJson = await graphqlRequest<{ data: SinglePostData }>(query);
-    const singlePost = resJson.data.post;
-
-    return singlePost;
+  const resJson = await graphqlRequest<{ data: { post: PostData } }>(query);
+  return resJson.data.post;
 }
 
 export async function getPostSlugs() {
@@ -124,13 +120,13 @@ export async function getCategorySlugs() {
     }`
   };
 
-  const resJson = await graphqlRequest(query);
+  const resJson = await graphqlRequest<{ data: CategorySlugsData }>(query);
   const categories = resJson.data.categories.nodes;
 
   return categories;
 }
 
-export async function getCategoryDetails(categoryName) {
+export async function getCategoryDetails(categoryName: string) {
   const query = {
     query: `query getCategoryDetails {
       category(id: "${categoryName}", idType: SLUG) {
@@ -141,7 +137,7 @@ export async function getCategoryDetails(categoryName) {
     }`
   };
 
-  const resJson = await graphqlRequest(query);
+  const resJson = await graphqlRequest<{ data: CategoryDetailsData }>(query);
   const categoryDetails = resJson.data.category;
 
   return categoryDetails;

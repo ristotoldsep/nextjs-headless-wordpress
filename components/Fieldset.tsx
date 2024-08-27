@@ -1,10 +1,13 @@
 // Fieldset.js
+import React, { ReactNode } from 'react';
 
-import React from 'react';
+interface FieldsetProps {
+  children: ReactNode;
+}
 
-const Fieldset = ({ children }) => {
+const Fieldset: React.FC<FieldsetProps> = ({ children }) => {
   return (
-    <div className='flex flex-col'>
+    <div className="flex flex-col">
       {children}
     </div>
   );

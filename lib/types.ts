@@ -1,8 +1,13 @@
-// lib/types.ts
-
 /**
  * POST TYPES
  */
+
+export interface PageInfo {
+  endCursor: string;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  startCursor: string;
+}
 
 export interface FeaturedImage {
   node: {
@@ -34,19 +39,43 @@ export interface Post {
 }
 
 export interface PostsData {
-  posts: {
-    nodes: Post[];
-    pageInfo: {
-      endCursor: string;
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      startCursor: string;
-    };
+  nodes: Post[];
+  pageInfo: PageInfo;
+}
+
+
+export interface PostData {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  content?: string;
+  modified: string;
+  featuredImage?: {
+      node: {
+          mediaDetails: {
+              sizes: Array<{
+                  width: number;
+                  height: number;
+                  sourceUrl: string;
+              }>;
+          };
+      };
+  };
+  categories?: {
+      nodes: Array<{
+          name: string;
+          slug: string;
+      }>;
   };
 }
 
 export interface SinglePostData {
   post: Post;
+}
+
+export interface Slug {
+  slug: string;
 }
 
 export interface PostSlugsData {
@@ -55,49 +84,62 @@ export interface PostSlugsData {
   };
 }
 
+export interface CategorySlugsData {
+  categories: {
+    nodes: Slug[];
+  };
+}
 
+export interface CategoryDetails {
+  count: number;
+  name: string;
+  slug: string;
+}
+
+export interface CategoryDetailsData {
+  category: CategoryDetails;
+}
 
 /**
  * PRODUCTS TYPES
  */
 export interface ProductThumbnail {
-    mediaDetails: {
-      sizes: {
-        sourceUrl: string;
-        height: string;
-        width: string;
-      }[];
+  mediaDetails: {
+    sizes: {
+      sourceUrl: string;
+      height: string;
+      width: string;
+    }[];
+  };
+}
+
+export interface ProductCategory {
+  name: string;
+  slug: string;
+}
+
+export interface ProductFields {
+  summary: string;
+  thumbnail: {
+    node: ProductThumbnail;
+  };
+}
+
+export interface Product {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  productFields: ProductFields;
+  productCategories: {
+    nodes: ProductCategory[];
+  };
+}
+
+export interface ProductsData {
+  data: {
+    products: {
+      nodes: Product[];
     };
   }
-  
-  export interface ProductCategory {
-    name: string;
-    slug: string;
-  }
-  
-  export interface ProductFields {
-    summary: string;
-    thumbnail: {
-      node: ProductThumbnail;
-    };
-  }
-  
-  export interface Product {
-    id: string;
-    title: string;
-    slug: string;
-    excerpt: string;
-    productFields: ProductFields;
-    productCategories: {
-      nodes: ProductCategory[];
-    };
-  }
-  
-  export interface ProductsData {
-    data: {
-      products: {
-        nodes: Product[];
-      };
-    }
-  }
-  
+}
