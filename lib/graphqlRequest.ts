@@ -7,7 +7,12 @@ interface GraphQLQuery {
 
 export default async function graphqlRequest<T>(query: GraphQLQuery): Promise<T> {
     const url = "https://gatsby.vdisain.dev/graphql";
-    const headers = { 'Content-Type': 'application/json' };
+    
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+
+    if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
+        headers['Authorization'] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
+    }
 
     const res = await fetch(url, {
         headers,
