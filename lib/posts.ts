@@ -61,41 +61,47 @@ export async function getPostList(endCursor: string | null = null, taxonomy: { k
   return allPosts;
 }
 
-
 export async function getSinglePost(slug: string): Promise<PostData> {
   const query = {
-      query: `
-          query getSinglePost {
-              post(id: "${slug}", idType: SLUG) {
-                  id
-                  title(format: RENDERED)
-                  content(format: RENDERED)
-                  excerpt(format: RENDERED)
-                  modified
-                  slug
-                  featuredImage {
-                      node {
-                          mediaDetails {
-                              sizes {
-                                  width
-                                  height
-                                  sourceUrl
-                              }
-                          }
-                      }
-                  }
-                  categories {
-                      nodes {
-                          name
-                          slug
-                      }
-                  }
+    query: `
+      query getSinglePost {
+        post(id: "${slug}", idType: SLUG) {
+          id
+          title(format: RENDERED)
+          content(format: RENDERED)
+          excerpt(format: RENDERED)
+          modified
+          slug
+          featuredImage {
+            node {
+              mediaDetails {
+                sizes {
+                  width
+                  height
+                  sourceUrl
+                }
               }
+            }
           }
-      `,
+          categories {
+            nodes {
+              name
+              slug
+            }
+          }
+        }
+      }
+    `,
   };
 
   const resJson = await graphqlRequest<{ data: { post: PostData } }>(query);
+
+  // Ensure postData exists
+  if (!resJson.data || !resJson.data.post) {
+    console.error("No post data returned", resJson); // Log an error message with the full response
+    throw new Error("Failed to fetch post: No post data returned");
+  }
+
   return resJson.data.post;
 }
 

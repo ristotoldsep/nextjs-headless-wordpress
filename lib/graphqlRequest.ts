@@ -23,9 +23,17 @@ export default async function graphqlRequest<T>(query: GraphQLQuery, token?: str
     });
 
     if (!res.ok) {
+        const errorText = await res.text();
+        console.error(`GraphQL request failed: ${res.statusText}, ${errorText}`);
         throw new Error(`Network response was not ok: ${res.statusText}`);
     }
 
     const resJson = await res.json();
+
+    if (resJson.errors) {
+        console.error("GraphQL errors:", resJson.errors);
+        throw new Error("GraphQL request failed with errors");
+    }
+    
     return resJson as T;
 }

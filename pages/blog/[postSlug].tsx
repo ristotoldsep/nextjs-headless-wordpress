@@ -31,12 +31,13 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     const postData = await getSinglePost(params.postSlug);
     // const { comments, commentCount } = await getComments(params.postSlug);
     // const seoData = await getSeo('post', params.postSlug);
-
-    let featuredImageUrl = postData.featuredImage ? postData.featuredImage.node.mediaDetails.sizes[1].sourceUrl : "/home-bg.webp";
-
+    
+    // Ensure postData and its nested properties exist
     if (!postData) {
         return { notFound: true };
     }
+    
+    let featuredImageUrl = postData.featuredImage ? postData.featuredImage.node.mediaDetails.sizes[1].sourceUrl : "/home-bg.webp";
 
     return {
         props: {
