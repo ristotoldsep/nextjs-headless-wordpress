@@ -3,9 +3,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { slug, type, secret } = req.query;
 
-    if (typeof slug !== 'string' || typeof type !== 'string') {
-        return res.status(400).json({ message: 'Invalid query parameters' });
-    }
+    // if (typeof slug !== 'string' || typeof type !== 'string') {
+    //     return res.status(400).json({ message: 'Invalid query parameters' });
+    // }
 
     let path = '';
 
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             path = `/products/${slug}`;
             break;
         case 'home':
-            path = '/blog/';
+            path = '/blog';
             break;
         default:
             return res.status(400).json({ message: 'Invalid type parameter' });
