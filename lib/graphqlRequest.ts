@@ -14,7 +14,7 @@ export default async function graphqlRequest<T>(query: GraphQLQuery, token?: str
         headers['Authorization'] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
     }
 
-    console.log("Request Headers:", headers);  // Log headers for debugging
+    // console.log("Request Headers:", headers);  // Log headers for debugging
 
     const res = await fetch(url, {
         headers,
