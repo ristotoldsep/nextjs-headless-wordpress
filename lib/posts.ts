@@ -1,7 +1,7 @@
 import graphqlRequest from "./graphqlRequest";
 import { PostData, PostsData, SinglePostData, PostSlugsData, CategorySlugsData, CategoryDetailsData } from "./types";
 
-export async function getPostList(endCursor: string | null = null, taxonomy: { key: string, value: string } | null = null) {
+export async function getPostList(endCursor: string | null = null, taxonomy: { key: string, value: string } | null = null, token?: string): Promise<PostsData> {
   let condition = `after: "${endCursor}", first: 10, where: {orderby: {field: DATE, order: DESC}}`;
 
   if (taxonomy) {
@@ -47,11 +47,20 @@ export async function getPostList(endCursor: string | null = null, taxonomy: { k
       `,
   };
 
-  const resJson = await graphqlRequest<{ data: { posts: PostsData } }>(query);
+  const resJson = await graphqlRequest<{ data: { posts?: PostsData } }>(query, token);
+
+  console.log("API Response:", resJson); // Log the API response to inspect it
+
+  if (!resJson.data || !resJson.data.posts) {
+    console.error("No posts data returned", resJson); // Log an error message with the full response
+    throw new Error("Failed to fetch posts: No posts data returned");
+  }
+
   const allPosts = resJson.data.posts;
 
   return allPosts;
 }
+
 
 export async function getSinglePost(slug: string): Promise<PostData> {
   const query = {

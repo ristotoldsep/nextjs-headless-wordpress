@@ -1,18 +1,20 @@
-// lib/graphqlRequest.ts
-
 interface GraphQLQuery {
     query: string;
     variables?: Record<string, any>;
 }
 
-export default async function graphqlRequest<T>(query: GraphQLQuery): Promise<T> {
+export default async function graphqlRequest<T>(query: GraphQLQuery, token?: string): Promise<T> {
     const url = "https://gatsby.vdisain.dev/graphql";
     
     const headers: Record<string, string> = { 'Content-Type': 'application/json' };
 
-    if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    } else if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
         headers['Authorization'] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
     }
+
+    console.log("Request Headers:", headers);  // Log headers for debugging
 
     const res = await fetch(url, {
         headers,

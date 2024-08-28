@@ -1,3 +1,5 @@
+// blog/index.tsx
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
@@ -13,19 +15,22 @@ import { PostsData } from "@/lib/types";
 
 interface Props {
   allPosts: PostsData;
+  token: string;
 }
 
 export async function getStaticProps() {
   const allPosts = await getPostList();
+  const token = process.env.WORDPRESS_AUTH_REFRESH_TOKEN;
 
   return {
     props: {
       allPosts,
+      token,
     },
   };
 }
 
-export default function BlogHome({ allPosts }: Props) {
+export default function BlogHome({ allPosts, token }: Props) {
   useEffect(() => {
     AOS.init({
       duration: 1000, // Animation duration in milliseconds
@@ -101,7 +106,7 @@ export default function BlogHome({ allPosts }: Props) {
             ))}
           </ul>
           <div className="py-8 text-center">
-            <LoadMore posts={posts} setPosts={setPosts} />
+            <LoadMore posts={posts} setPosts={setPosts} token={token} />
           </div>
         </section>
       </main>

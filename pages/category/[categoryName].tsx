@@ -15,6 +15,7 @@ import { CategoryDetails, PostsData, Post, Category } from "@/lib/types";
 interface CategoryArchiveProps {
   categoryPosts: PostsData;
   categoryDetails: CategoryDetails;
+  token?: string;
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -36,11 +37,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const categoryDetails = await getCategoryDetails(
     params?.categoryName as string
   );
+  
+  const token = process.env.WORDPRESS_AUTH_REFRESH_TOKEN;
 
   return {
     props: {
       categoryPosts,
       categoryDetails,
+      token,
     },
   };
 };
@@ -48,6 +52,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export default function CategoryArchive({
   categoryPosts,
   categoryDetails,
+  token
 }: CategoryArchiveProps) {
   useEffect(() => {
     AOS.init({
@@ -132,6 +137,7 @@ export default function CategoryArchive({
               posts={posts}
               setPosts={setPosts}
               taxonomy={{ key: "categoryName", value: categoryDetails.slug }}
+              token={token}
             />
           </div>
         </section>
