@@ -72,6 +72,7 @@ export async function getSinglePost(slug: string): Promise<PostData> {
           excerpt(format: RENDERED)
           modified
           slug
+          databaseId
           featuredImage {
             node {
               mediaDetails {

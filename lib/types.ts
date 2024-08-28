@@ -48,6 +48,7 @@ export interface PostData {
   id: string;
   title: string;
   slug: string;
+  databaseId: number;
   excerpt?: string;
   content?: string;
   modified: string;

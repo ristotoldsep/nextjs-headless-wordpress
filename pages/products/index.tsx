@@ -43,7 +43,7 @@ const ProductsList = ({ products }: ProductsListProps) => {
           </p>
       </div>
       <main className="px-8 py-12 min-h-[65vh]">
-        <div className='grid text-center md:grid-cols-2 lg:grid-cols-3 gap-8'>
+        <div className='max-w-5xl mx-auto grid text-center md:grid-cols-2 lg:grid-cols-3 gap-8'>
           {products.map(product => (
               <Card
                   key={product.id}
