@@ -15,7 +15,7 @@ import { Rubik, Roboto_Slab } from 'next/font/google';
 const rubik = Rubik({ subsets: ['latin'], display: 'swap' });
 const roboto_slab = Roboto_Slab({ subsets: ['latin'], display: 'swap' });
 
-console.log(rubik);
+// console.log(rubik);
 
 interface PostProps {
   postData: PostData;
@@ -69,24 +69,31 @@ const Post: NextPage<PostProps> = ({ postData, featuredImageUrl, comments, comme
     const excerptHtml = postData.excerpt ? { __html: postData.excerpt } : { __html: '' };
     const contentHtml = postData.content ? { __html: postData.content } : { __html: '' };
 
-    let jsonSchema = seoData.schema.raw.replace(/https:\/\/gatsby.vdisain.dev(?!\/wp-content\/uploads)/g, 'https://nextjs-headless-wordpress-theta.vercel.app/blog')
+    let jsonSchema = seoData?.schema?.raw
+    ? seoData.schema.raw.replace(/https:\/\/gatsby.vdisain.dev(?!\/wp-content\/uploads)/g, 'https://nextjs-headless-wordpress-theta.vercel.app/blog')
+    : '';
 
     return (
         <>
                 <Head>
-                <title key="title">{seoData.title}</title>
-                <meta name="description" content={seoData.metaDesc} key="metadesc" />
+                <title key="title">{seoData?.title || postData.title}</title>
+                <meta name="description" content={seoData?.metaDesc || postData.excerpt} key="metadesc" />
                 
-                <meta property="og:title" content={seoData.opengraphTitle} />
-                <meta key="og-description" property="og:description" content={seoData.metaDesc} />
-                <meta property="og:url" content={seoData.opengraphUrl} />
-                <meta property="og:image" content={seoData.opengraphImage.mediaItemUrl} />
-                <meta property="og:type" content={seoData.opengraphType} />
-                <meta property="og:locale" content="en_IN" />
-                
-                <meta property="og:site_name" content={seoData.opengraphSiteName} />
-                
-                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonSchema }}></script>
+                {seoData && (
+                    <>
+                        <meta property="og:title" content={seoData.opengraphTitle} />
+                        <meta key="og-description" property="og:description" content={seoData.metaDesc} />
+                        <meta property="og:url" content={seoData.opengraphUrl} />
+                        <meta property="og:image" content={seoData.opengraphImage.mediaItemUrl} />
+                        <meta property="og:type" content={seoData.opengraphType} />
+                        <meta property="og:locale" content="en_IN" />
+                        <meta property="og:site_name" content={seoData.opengraphSiteName} />
+                    </>
+                )}
+
+                {jsonSchema && (
+                    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonSchema }}></script>
+                )}
 
                 <style>
                     {
