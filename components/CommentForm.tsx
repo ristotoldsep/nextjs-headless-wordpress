@@ -1,23 +1,29 @@
-import { useState } from "react";
+// /components/CommentForm.tsx
 
-export default function CommentForm({postId}) {
+import { useState, FormEvent } from "react";
+
+interface CommentFormProps {
+    postId: number;
+}
+
+export default function CommentForm({ postId }: CommentFormProps) {
 
     const [submitStatus, setSubmitStatus] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
     const [alertColor, setAlertColor] = useState('');
 
-    const handleSubmit = async function(event) {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         setSubmitStatus(true);
         setResponseMessage('Your commenting is being submitted...');
         setAlertColor('bg-yellow-500');
 
-        let data = {
-            author: event.target.author.value,
-            authorEmail: event.target.authorEmail.value,
-            content: event.target.content.value.replace(/\n/g, "\\n"),
-            postId: event.target.postId.value,
+        const data = {
+            author: (event.currentTarget.author as HTMLInputElement).value,
+            authorEmail: (event.currentTarget.authorEmail as HTMLInputElement).value,
+            content: (event.currentTarget.content as HTMLTextAreaElement).value.replace(/\n/g, "\\n"),
+            postId: postId.toString(),
         };
 
         const jsonData = JSON.stringify(data);

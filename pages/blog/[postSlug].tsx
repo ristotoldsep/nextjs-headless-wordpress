@@ -1,4 +1,4 @@
-// [postSlug].tsx
+// /blog/[postSlug].tsx
 
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
@@ -7,7 +7,7 @@ import SiteFooter from "../../components/SiteFooter";
 import CommentForm from "../../components/CommentForm";
 import { getPostSlugs, getSinglePost } from "../../lib/posts";
 import { PostData, Slug } from "../../lib/types";
-// import { getComments, CommentsData } from "../../lib/comments";
+import { getComments, CommentsData } from "../../lib/comments";
 // import { getSeo, SeoData } from "../../lib/seo";
 import Date from "../../components/Date";
 // import { Rubik, Roboto_Slab } from 'next/font/google';
@@ -18,8 +18,8 @@ import Date from "../../components/Date";
 interface PostProps {
   postData: PostData;
   featuredImageUrl: string;
-//   comments: CommentsData;
-//   commentCount: number;
+  comments: CommentsData;
+  commentCount: number;
 //   seoData: SeoData;
 }
 
@@ -29,7 +29,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     }
 
     const postData = await getSinglePost(params.postSlug);
-    // const { comments, commentCount } = await getComments(params.postSlug);
+    const { comments, commentCount } = await getComments(params.postSlug);
     // const seoData = await getSeo('post', params.postSlug);
     
     // Ensure postData and its nested properties exist
@@ -43,8 +43,8 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
         props: {
             postData,
             featuredImageUrl: `url(${featuredImageUrl})`,
-            // comments,
-            // commentCount,
+            comments,
+            commentCount,
             // seoData
         },
     };
@@ -61,7 +61,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-const Post: NextPage<PostProps> = ({ postData, featuredImageUrl/* , comments, commentCount, seoData */ }) => {
+const Post: NextPage<PostProps> = ({ postData, featuredImageUrl, comments, commentCount/* , seoData */ }) => {
 
     // Ensuring that excerpt and content are treated as strings before being used
     const excerptHtml = postData.excerpt ? { __html: postData.excerpt } : { __html: '' };
@@ -95,12 +95,12 @@ const Post: NextPage<PostProps> = ({ postData, featuredImageUrl/* , comments, co
                     <div dangerouslySetInnerHTML={contentHtml} className="post-content container lg:max-w-4xl mx-auto"/>
                 </section>
             </article>
-            {/* <div className="container mx-auto lg:max-w-4xl">
+            <div className="container mx-auto lg:max-w-4xl">
                 <h3 className="text-xl py-2 my-4 border-l-4 border-l-lime-300 pl-4">{commentCount ? commentCount : 'No'} comments on this post so far:</h3>
                 <CommentForm postId={postData.databaseId} />
-            </div> */}
+            </div>
 
-            {/* <div className="container mx-auto lg:max-w-4xl">
+            <div className="container mx-auto lg:max-w-4xl">
 
                 <section>
                     <ul>
@@ -129,7 +129,7 @@ const Post: NextPage<PostProps> = ({ postData, featuredImageUrl/* , comments, co
                     </ul>
                     
                 </section>
-            </div> */}
+            </div>
             
             <SiteFooter />
         </>

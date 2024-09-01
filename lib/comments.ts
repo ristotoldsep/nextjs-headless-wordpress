@@ -1,6 +1,24 @@
+// comments.js
+
 import graphqlRequest from "./graphqlRequest";
 
-export async function createComment(body) {
+interface CommentBody {
+  author: string;
+  authorEmail: string;
+  postId: string;
+  content: string;
+}
+
+interface CommentResponse {
+  data: {
+      createComment: {
+          success: boolean;
+      };
+  };
+  errors?: Array<{ message: string }>;
+}
+
+export async function createComment(body: CommentBody):Promise<CommentResponse> {
     const mutation = {
         query: `mutation createComment(
             $author: String = "${body.author}", 
@@ -23,12 +41,52 @@ export async function createComment(body) {
           }`
     };
 
-    const resJson = await graphqlRequest(mutation);
+    const resJson = await graphqlRequest<CommentResponse>(mutation);
 
     return resJson;
 }
 
-export async function getComments(slug) {
+interface CommentAuthor {
+  node: {
+      name: string;
+      avatar: {
+          url: string;
+          height: number;
+          width: number;
+      };
+  };
+}
+
+interface CommentNode {
+  id: string;
+  content: string;
+  date: string;
+  parentId: string | null;
+  author: CommentAuthor;
+}
+
+export interface CommentsData {
+  nodes: CommentNode[];
+}
+
+export interface GetCommentsResponse {
+  comments: CommentsData;
+  commentCount: number;
+}
+
+interface CommentsQueryResponse {
+  data: {
+      post: {
+          comments: {
+              nodes: CommentNode[];
+          };
+          commentCount: number;
+      };
+  };
+}
+
+
+export async function getComments(slug: string): Promise<GetCommentsResponse> {
     const query = {
         query: `query getComments {
             post(id: "${slug}", idType: SLUG) {
@@ -55,7 +113,7 @@ export async function getComments(slug) {
           }`
     };
 
-    const resJson = await graphqlRequest(query);
+    const resJson = await graphqlRequest<CommentsQueryResponse>(query);
     const post = resJson.data.post;
 
     console.log(JSON.stringify(post));

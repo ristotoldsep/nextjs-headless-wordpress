@@ -1,5 +1,5 @@
 /**
- * POST TYPES
+ * types.ts
  */
 
 export interface PageInfo {
