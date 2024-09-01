@@ -10,10 +10,12 @@ import { PostData, Slug } from "../../lib/types";
 import { getComments, CommentsData } from "../../lib/comments";
 // import { getSeo, SeoData } from "../../lib/seo";
 import Date from "../../components/Date";
-// import { Rubik, Roboto_Slab } from 'next/font/google';
+import { Rubik, Roboto_Slab } from 'next/font/google';
 
-// const rubik = Rubik({ subsets: ['latin'], display: 'swap' });
-// const roboto_slab = Roboto_Slab({ subsets: ['latin'], display: 'swap' });
+const rubik = Rubik({ subsets: ['latin'], display: 'swap' });
+const roboto_slab = Roboto_Slab({ subsets: ['latin'], display: 'swap' });
+
+console.log(rubik);
 
 interface PostProps {
   postData: PostData;
@@ -71,18 +73,27 @@ const Post: NextPage<PostProps> = ({ postData, featuredImageUrl, comments, comme
         <>
             <Head>
                 <title key="title">{postData.title}</title>
+                <style>
+                    {
+                        `
+                            .post-content ul {
+                                font-family: ${roboto_slab.style.fontFamily}
+                            }
+                        `
+                    }
+                </style>
                 {/* <title key="title">{seoData.title}</title>
                 <meta name="description" content={seoData.metaDesc} key="metadesc" /> */}
             </Head>
             <section className="bg-slate-700 bg-opacity-70 absolute w-full z-20">
                 <SiteHeader className="header-single-post relative" />
             </section>
-            <article className={`font-light`}>
+            <article className={`${rubik.className} font-light`}>
                 <section className="hero-area h-[60vh] min-h-[30rem] bg-no-repeat bg-cover bg-center relative" style={{backgroundImage: featuredImageUrl}}>
                     <div className="absolute inset-0 bg-slate-900 opacity-40"></div>
 
                     <div className="container mx-auto h-full flex flex-col justify-center lg:max-w-4xl">
-                        <h1 className={`text-6xl font-normal text-slate-100 relative z-10 py-8 mt-12`}>{postData.title}</h1>
+                        <h1 className={`${roboto_slab.className} text-6xl font-normal text-slate-100 relative z-10 py-8 mt-12`}>{postData.title}</h1>
 
                         <div className="pb-4 text-slate-100 z-10">
                             Posted on <Date dateString={postData.modified} />
