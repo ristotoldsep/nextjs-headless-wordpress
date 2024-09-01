@@ -8,7 +8,7 @@ import CommentForm from "../../components/CommentForm";
 import { getPostSlugs, getSinglePost } from "../../lib/posts";
 import { PostData, Slug } from "../../lib/types";
 import { getComments, CommentsData } from "../../lib/comments";
-// import { getSeo, SeoData } from "../../lib/seo";
+import { getSeo, SeoData } from "../../lib/seo";
 import Date from "../../components/Date";
 import { Rubik, Roboto_Slab } from 'next/font/google';
 
@@ -22,7 +22,7 @@ interface PostProps {
   featuredImageUrl: string;
   comments: CommentsData;
   commentCount: number;
-//   seoData: SeoData;
+  seoData: SeoData;
 }
 
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
 
     const postData = await getSinglePost(params.postSlug);
     const { comments, commentCount } = await getComments(params.postSlug);
-    // const seoData = await getSeo('post', params.postSlug);
+    const seoData = await getSeo('post', params.postSlug);
     
     // Ensure postData and its nested properties exist
     if (!postData) {
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
             featuredImageUrl: `url(${featuredImageUrl})`,
             comments,
             commentCount,
-            // seoData
+            seoData
         },
     };
 };
@@ -63,16 +63,31 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
 };
 
-const Post: NextPage<PostProps> = ({ postData, featuredImageUrl, comments, commentCount/* , seoData */ }) => {
+const Post: NextPage<PostProps> = ({ postData, featuredImageUrl, comments, commentCount, seoData }) => {
 
     // Ensuring that excerpt and content are treated as strings before being used
     const excerptHtml = postData.excerpt ? { __html: postData.excerpt } : { __html: '' };
     const contentHtml = postData.content ? { __html: postData.content } : { __html: '' };
 
+    let jsonSchema = seoData.schema.raw.replace(/https:\/\/gatsby.vdisain.dev(?!\/wp-content\/uploads)/g, 'https://nextjs-headless-wordpress-theta.vercel.app/blog')
+
     return (
         <>
-            <Head>
-                <title key="title">{postData.title}</title>
+                <Head>
+                <title key="title">{seoData.title}</title>
+                <meta name="description" content={seoData.metaDesc} key="metadesc" />
+                
+                <meta property="og:title" content={seoData.opengraphTitle} />
+                <meta key="og-description" property="og:description" content={seoData.metaDesc} />
+                <meta property="og:url" content={seoData.opengraphUrl} />
+                <meta property="og:image" content={seoData.opengraphImage.mediaItemUrl} />
+                <meta property="og:type" content={seoData.opengraphType} />
+                <meta property="og:locale" content="en_IN" />
+                
+                <meta property="og:site_name" content={seoData.opengraphSiteName} />
+                
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonSchema }}></script>
+
                 <style>
                     {
                         `
